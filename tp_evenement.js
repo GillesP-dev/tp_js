@@ -13,6 +13,8 @@ navbarre.style.height = '100px';
 navbarre.style.width = '100%';
 navbarre.style.color = "white";
 navbarre.style.position = "fixed";
+let titrenavbarre = createDom("h1","TP-Evénement",navbarre);
+titrenavbarre.style.textAlign = "center";
 let listeNav = createDom("ul","",navbarre);
 listeNav.style.display = "flex";
 listeNav.style.flexdirection = "row";
@@ -32,7 +34,7 @@ boutonAjouter.style.height = '30px';
 const sectionForm = createDom("section","",document.body);
 sectionForm.setAttribute("class","section1");
 sectionForm.style.width = "505px";
-sectionForm.style.height = "500px";
+sectionForm.style.height = "200px";
 sectionForm.style.margin = "auto";
 sectionForm.style.display = "none";
 const formulaire = createDom("form","",sectionForm);
@@ -49,6 +51,7 @@ paraArticle.setAttribute("type","text");
 paraArticle.setAttribute("name","para");
 paraArticle.setAttribute("class","para");
 paraArticle.style.width = "500px";
+paraArticle.style.height = "150px";
 paraArticle.placeholder = "Renseigner les éléments";
 const btnForm = createDom("input","",formulaire);
 btnForm.setAttribute("type","submit");
@@ -56,6 +59,8 @@ btnForm.setAttribute("value","Enregistrer");
 btnForm.setAttribute("class","enregistrement");
 btnForm.style.width = "120px";
 btnForm.style.height = "20px";
+btnForm.style.position = "relative";
+btnForm.style.left = "77%";
 const section2 = createDom("section","",document.body);
 
 //-------------------evenement btn nouvel article--------------
@@ -72,15 +77,26 @@ let tableauArticle = [];
      e.preventDefault();
     let article = createDom("article","",section2);
     tableauArticle.push(article) ;
+    article.style.border = "2px solid grey";
+    article.style.marginTop = "200px";
+    article.style.display = "flex";
+    article.style.flexDirection = "column";
+    article.style.borderRadius = "5px";
     
     let titres = createDom("h2","",article);
     titres.textContent = titreArticle.value;
+    titres.style.textAlign = "center";
+    titres.style.borderBottom = "1px solid gray";
+    titres.style.marginTop = "0";
+    titres.style.background = "gainsboro";
 
     let paragraphe = createDom("p","",article);
     paragraphe.textContent = paraArticle.value;
+    paragraphe.style.margin = "20px";
 
     let boutonSupp = createDom("button","",article);
     boutonSupp.textContent = "Supprimer";
+    
     //----------listes et ancres---------------------
     
 
@@ -94,7 +110,11 @@ let tableauArticle = [];
     tableauArticle.forEach(elem => {
         elem.id = "article"+i;
         let id = "#"+elem.id;
+        let classAncre = "ancre"+i;
         ancres.setAttribute("href",id);
+        titreNav.setAttribute("id",classAncre)
+        let incsup = "sup("+i+')';
+        boutonSupp.setAttribute("onclick",incsup);
         i++;
     })
 
@@ -102,12 +122,18 @@ let tableauArticle = [];
     viderForm();
 
     sectionForm.style.display = "none";
-    
+   
 });
 
 //---------------btn supprimer-----------------------
+    function sup(n) {
+        document.getElementById("article"+n).remove();
+        document.getElementById("ancre"+n).remove();
+        
+    }
 
-// boutonSupp.addEventListener('click', () => {
-//     supArticle = () => {document.getElementById("i")}
-//     supArticle.remove();
-// })
+
+
+    
+
+
