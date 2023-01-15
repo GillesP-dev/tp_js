@@ -9,15 +9,25 @@ function createDom(element_name, text, parent) {
 let navbarre = createDom("nav","",document.body);
 navbarre.setAttribute("class","barreNave");
 navbarre.style.background = 'black';
-navbarre.style.height = '100px';
+navbarre.style.minHeight = '5%';
 navbarre.style.width = '100%';
 navbarre.style.color = "white";
 navbarre.style.position = "fixed";
 let titrenavbarre = createDom("h1","TP-Evénement",navbarre);
 titrenavbarre.style.textAlign = "center";
+let titrelumineux = true;
+setInterval(() => {
+    if(titrelumineux){
+        titrenavbarre.style.color = "grey";
+    }else {
+        titrenavbarre.style.color = "white";
+    }
+    titrelumineux = !titrelumineux;
+},800);
 let listeNav = createDom("ul","",navbarre);
 listeNav.style.display = "flex";
 listeNav.style.flexdirection = "row";
+listeNav.style.flexWrap = "wrap";
 listeNav.style.listStyleType = "none";
 
 //------------------creation bouton ajouter--------------------
@@ -72,13 +82,14 @@ let element = document.getElementById('btnAjouter');
 
 //--------------------evenement btn enregistrer----------------
 let tableauArticle = [];
- 
+let i = 0;
+
  formulaire.addEventListener('submit', (e) => {
      e.preventDefault();
     let article = createDom("article","",section2);
     tableauArticle.push(article) ;
     article.style.border = "2px solid grey";
-    article.style.marginTop = "200px";
+    article.style.marginTop = "50px";
     article.style.display = "flex";
     article.style.flexDirection = "column";
     article.style.borderRadius = "5px";
@@ -106,17 +117,17 @@ let tableauArticle = [];
     ancres.textContent = titreArticle.value;
     ancres.style.color = "white";
 
-    let i = 0;
-    tableauArticle.forEach(elem => {
-        elem.id = "article"+i;
-        let id = "#"+elem.id;
+    
+    
+        article.id = "article"+i;
+        let id = "#"+article.id;
         let classAncre = "ancre"+i;
         ancres.setAttribute("href",id);
         titreNav.setAttribute("id",classAncre)
         let incsup = "sup("+i+')';
         boutonSupp.setAttribute("onclick",incsup);
         i++;
-    })
+    
 
     viderForm = () => { document.getElementById("form").reset(); }
     viderForm();
@@ -129,7 +140,7 @@ let tableauArticle = [];
     function sup(n) {
         document.getElementById("article"+n).remove();
         document.getElementById("ancre"+n).remove();
-        
+        tableauArticle = tableauArticle.filter((ele) => {return ele.id !== "article"+n} );
     }
 
 
